@@ -23,7 +23,7 @@
         "version": ".1"
       }
     },
-    "timestamp": "2018-07-23T16:41:00+10:00"
+    "timestamp": "2018-07-23T16:42:21+10:00"
   },
   "software": {
     "base": {
@@ -39,7 +39,7 @@
     "scripts": {
       "start": {
         "language": "sh",
-        "content": "#!/bin/sh\r\ncd /home/app\r\ngit pull\r\nbundle --standalone\r\nbundle exec thin start"
+        "content": "#!/bin/sh\r\nexport PID_FILE=/home/engines/run/thin.pid\r\ncd /home/app\r\ngit pull\r\nbundle --standalone\r\nbundle exec thin start\r\necho $! > $PID_FILE\r\n"
       }
     },
     "installed_packages": [
