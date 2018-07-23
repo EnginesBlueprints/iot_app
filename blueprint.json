@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2018-07-23T15:59:31+10:00"
+    "timestamp": "2018-07-23T16:09:56+10:00"
   },
   "software": {
     "base": {
@@ -25,8 +25,8 @@
       "deployment_type": "web",
       "http_protocol": "https_and_http",
       "memory": {
-        "required": 128,
-        "recommended": 192
+        "required": 192,
+        "recommended": 253
       }
     },
     "scripts": {
