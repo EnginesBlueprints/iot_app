@@ -15,12 +15,98 @@
         "level": "alpha",
         "patch": 0
       }
-    }
+    },
+    "timestamp": "2018-07-23T15:53:24+10:00"
   },
   "software": {
     "base": {
+      "name": "iotapp",
+      "framework": "sinatra",
       "deployment_type": "web",
-      "http_protocol": "https_and_http"
+      "http_protocol": "https_and_http",
+      "memory": {
+        "required": 128,
+        "recommended": 192
+      }
+    },
+    "scripts": {
+      "start": {
+        "language": "sh",
+        "content": "#!/bin/sh\r\ncd /home/app\r\ngit pull\r\nbundle --standalone"
+      }
+    },
+    "installed_packages": [
+      {
+        "name": "dhsvad_iot",
+        "download_type": "git",
+        "source_url": "https://github.com/lachdoug/dhsvad_iot",
+        "path_to_extracted": "./"
+      }
+    ],
+    "service_configurations": [
+      {
+        "publisher_namespace": "EnginesSystem",
+        "type_path": "database/sql/mysql",
+        "variables": {
+          "database_name": "_Engines_Builder(engine_name)",
+          "database_host": "_Engines_System(mysql_host)",
+          "db_username": "_Engines_Builder(engine_name) ",
+          "db_password": "_Engines_System(random(10))",
+          "collation": "utf8_general_ci",
+          "full_access": "false"
+        }
+      }
+    ],
+    "environment_variables": [
+      {
+        "name": "USER_NAME",
+        "mandatory": true,
+        "immutable": true,
+        "ask_at_build_time": true,
+        "input": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "USER_PASSWORD",
+        "mandatory": true,
+        "ask_at_build_time": true,
+        "input": {
+          "type": "password_with_confirmation"
+        }
+      },
+      {
+        "name": "APP_MODE",
+        "mandatory": true,
+        "immutable": true,
+        "ask_at_build_time": true,
+        "input": {
+          "type": "select",
+          "collection": {
+            "items": {
+              "map": "Mapping",
+              "power": "Power"
+            }
+          }
+        }
+      }
+    ],
+    "file_write_permissions": [
+      {
+        "path": "/home/app",
+        "recursive": true
+      }
+    ],
+    "framework_specific": {
+      "rake_tasks": [
+        {
+          "action": "db:migrate",
+          "always_run": true
+        },
+        {
+          "action": "db:seed"
+        }
+      ]
     }
   }
 }
